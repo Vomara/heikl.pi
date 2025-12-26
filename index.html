@@ -13,8 +13,9 @@
         // هذا الجزء هو المسؤول عن إظهار الكود في متصفح Chrome
         try {
             const Pi = window.Pi;
-            Pi.init({ version: "2.0", sandbox: true }); 
             
+            Pi.init({ version: "2.0", sandbox: true });
+
             document.getElementById("status").innerText = "إذا لم يظهر الكود تلقائياً، تأكد أنك تستخدم متصفح Chrome";
         } catch (err) {
             document.getElementById("status").innerText = "خطأ في الاتصال بمكتبة Pi";
