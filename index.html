@@ -2,9 +2,36 @@
 <html>
 <head>
     <title>Heikl Pi App</title>
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <script>
+      Pi.init({ version: "2.0", sandbox: false }); 
+    </script>
 </head>
+
 <body>
     <h1>Welcome to Heikl Pi App</h1>
-    <p>This is the home page of my application.</p>
+    
+    <button id="pay-button" style="padding: 20px; background-color: purple; color: white;">
+        اضغط هنا لتفعيل الخطوة 10 - دفع 1 Pi
+    </button>
+
+    <script>
+      document.getElementById('pay-button').onclick = async function() {
+        try {
+          const payment = await Pi.createPayment({
+            amount: 0.1, // يمكنك تقليل المبلغ لـ 0.1 لتوفير رصيدك
+            memo: "تفعيل الخانة رقم 10", 
+            metadata: { orderId: "step10-test" }
+          }, {
+            onReadyForServerApproval: (paymentId) => { console.log("تحتاج موافقة السيرفر"); },
+            onReadyForServerCompletion: (paymentId, txid) => { console.log("اكتملت المعاملة"); },
+            onCancel: (paymentId) => { console.log("تم إلغاء الدفع"); },
+            onError: (error, payment) => { console.error("خطأ:", error); },
+          });
+        } catch (err) {
+          alert("تأكد من فتح الموقع داخل Pi Browser");
+        }
+      };
+    </script>
 </body>
 </html>
